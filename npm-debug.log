@@ -1,0 +1,23 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+info using npm@1.1.0-alpha-6
+info using node@v0.6.4
+verbose config file /Users/jcranfor/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+ERR! Couldn't read dependencies.
+ERR! Error: ENOENT, no such file or directory '/Users/jcranfor/projects/idiveditjs/package.json'
+ERR! Report this *entire* log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Darwin 11.3.0
+ERR! command "node" "/usr/local/bin/npm" "install"
+ERR! cwd /Users/jcranfor/projects/idiveditjs
+ERR! node -v v0.6.4
+ERR! npm -v 1.1.0-alpha-6
+ERR! path /Users/jcranfor/projects/idiveditjs/package.json
+ERR! code ENOENT
+ERR! message ENOENT, no such file or directory '/Users/jcranfor/projects/idiveditjs/package.json'
+verbose exit [ 1, true ]
