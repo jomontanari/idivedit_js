@@ -3,10 +3,6 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Git.Settings">
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
-  </component>
   <component name="IdProvider" IDEtalkID="1FD3FB8E3AC4A7AF3BB1C4D6A344EFE0" />
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
