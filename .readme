@@ -1,0 +1,12 @@
+This is an experiment and an attempt to build a website I've been wanting to do for some time. 
+
+Backend: 
+- Node.js
+- Expressjs
+- Persistencejs connecting to MySQL
+
+Front end:
+- Backbonejs
+- Underscore.js
+- JQuery
+- Templates using underscore's _.template
