@@ -1,7 +1,7 @@
 var IDivedIt = IDivedIt || {};
 
 IDivedIt.ReviewModel = Backbone.Model.extend({
-    urlRoot: "/review/list"
+    urlRoot: "/review"
 });
 
 IDivedIt.ReviewListModel = Backbone.Collection.extend({

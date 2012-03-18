@@ -1,24 +1,3 @@
-//var persistence = require('./persistencejs').persistence;
-//
-//exports.Resort = persistence.define('Resorts', {
-//    name: "TEXT",
-//    countryid: "INT"
-//});
-//
-//exports.Review = persistence.define('Reviews', {
-//  reviewer_name: "TEXT",
-//  title: "TEXT",
-//  content: "TEXT",
-//  datecreated: "DATETIME",
-//  divesitename: "TEXT",
-//  resortid: "INT"
-//});
-//
-//
-//exports.Country = persistence.define('Countries', {
-//    name: "TEXT"
-//});
-
 var Sequelize = require("sequelize")
 var sequelize = new Sequelize('idivedit_js', 'root', null,
 {

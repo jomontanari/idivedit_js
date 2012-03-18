@@ -1,5 +1,6 @@
-h2 #{review.title}
+article(class="review")
+    header
+        h2 #{review.title}
+        h3 A review of #{review.divesitename} By #{review.reviewer_name} on #{review.createdAt.getDate()}/#{review.createdAt.getMonth() +1}/#{review.createdAt.getFullYear()}
 
-h3 A review of #{review.divesitename} By #{review.reviewer_name} on #{review.createdAt.getDate()}/#{review.createdAt.getMonth() +1}/#{review.createdAt.getFullYear()}
-
-p #{review.content}
+    p #{review.content}

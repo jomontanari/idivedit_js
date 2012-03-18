@@ -1,3 +1,6 @@
-h3 Find Reviews By Country
+h3(class="countries") Find Reviews By Country
 
 ul(id="countries")
+    each country in countries
+        a(href="#",class="country) #{country.name}
+            ul(id="resortsfor#{country.id}")

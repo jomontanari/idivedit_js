@@ -1,6 +1,8 @@
 extends layout
 
 block contents
+    h2(class='reviewcount') #{count} Reviews for dive sites in #{resort.name}
+
     each review in reviews
         include review
 

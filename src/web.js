@@ -14,29 +14,39 @@ app.use("/js/lib", express.static(__dirname + "/client/lib"));
 app.use("/js", express.static(__dirname + "/client"));
 app.use("/css", express.static(__dirname + "/css"));
 
+// Private methods
+var errorFn = function(response) {
+    return function() {
+        console.log("Error!")
+        response.send("")
+    };
+};
+
 // TODO: render on server to avoid multiple requests
 app.get("/", function(request, response) {
-    response.render("index")
+    var params = {};
+
+    var reviewQuery = sequelize.query(models.Review, {limit: 5, order: "createdAt DESC"}, function(reviews) {
+        params.reviews = reviews;
+    }, errorFn());
+
+    var countryQuery = sequelize.query(models.Country, null, function(countries) {
+        console.log(countries);
+        params.countries = countries;
+    }, errorFn());
+
+    sequelize.multipleQueries(sequelize.getChainer(), [reviewQuery, countryQuery], function() {
+        response.render("index", params);
+    }, errorFn());
 });
 
 app.use("/review/add", function(request, response) {
-    response.render("addreview")
+    response.render("addreview");
 });
 
-app.get('/review/list/:limit', function(request, response) {
-    sequelize.list(response, models.Review, {order: "createdAt DESC", limit: request.params.limit});
-});
-
-app.get('/review/list', function(request, response) {
-    sequelize.list(response, models.Review, {order: "createdAt DESC"});
-});
-
+// TODO: remove the need for this
 app.get('/countries', function(request, response) {
     sequelize.list(response, models.Country);
-});
-
-app.get('/resortreviews/:resort', function(request, response) {
-    sequelize.list(response, models.Review, {where: "resortid = " + request.params.resort});
 });
 
 app.get('/resorts/:countryid', function(request, response) {
@@ -45,11 +55,25 @@ app.get('/resorts/:countryid', function(request, response) {
     });
 });
 
+// TODO: Move some responsibilities elsewhere (SRP)
 app.get('/resort/:id', function(request, response) {
-    sequelize.listWithCallback(models.Review, null, function(reviews) {
-        response.render("reviews", {reviews: reviews});
-    });
+    var params = {};
+    var resortid = request.params.id;
+
+    var reviewQuery = sequelize.query(models.Review, {where: "resortid = " + resortid}, function(reviews) {
+        params.reviews = reviews;
+        params.count = reviews.length;
+    }, errorFn());
+
+    var resortQuery = sequelize.query(models.Resort, {where: "id = " + resortid}, function(resorts) {
+        params.resort = resorts[0];
+    }, errorFn());
+
+    sequelize.multipleQueries(sequelize.getChainer(), [reviewQuery, resortQuery], function() {
+        response.render("reviews", params);
+    }, errorFn());
 });
+
 
 // TODO Should do something more than just send blank response
 app.post("/review", function(request, response) {
