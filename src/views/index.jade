@@ -1,0 +1,19 @@
+extends layout
+
+block contents
+    h2 Read and Write Reviews of your favourite dive sites
+    form
+        label(for="search") Search for dive sites:
+        input(type="text",name="search")
+        input(type="button",value="GO!")
+
+    h3 Most Recent Reviews
+
+    a(href="/review/add") Write a Review
+
+    ul(id="reviews")
+
+    include countries
+
+block footer
+    script(src="/js/init_index.js")

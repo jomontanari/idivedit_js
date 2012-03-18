@@ -1,14 +1,16 @@
 var IDivedIt = IDivedIt || {};
 
 IDivedIt.ReviewModel = Backbone.Model.extend({
-    urlRoot: "/review/"
+    urlRoot: "/review/list"
 });
 
 IDivedIt.ReviewListModel = Backbone.Collection.extend({
 
     model: IDivedIt.ReviewModel,
 
-    url: "/reviews"
+    url: function() {
+        return "/review/list/" + this.limit;
+    }
 
 });
 
@@ -64,21 +66,18 @@ IDivedIt.ReviewListView = Backbone.View.extend({
     initialize: function(){
       _.bindAll(this, 'render');
         this.reviewListModel = new IDivedIt.ReviewListModel({view: this});
+        this.reviewListModel.limit = this.options.limit;
         this.reviewListModel.fetch({success: this.render, error: function() {console.log("error")}});
     },
 
-    //todo: refactor into one loop with el outside
     render: function() {
+        var $el = this.$el;
 
-        var views = this.reviewListModel.map(function(reviewModel) {
-            console.log(reviewModel);
-            return new IDivedIt.ReviewView({model: reviewModel});
+        this.reviewListModel.each(function(reviewModel) {
+            var view = new IDivedIt.ReviewView({model: reviewModel});
+            $el.append(view.render().el);
         });
 
-        var el = this.el;
-        _.each(views, function(view) {
-            $(el).append(view.render().el);
-        })
     }
 
 });

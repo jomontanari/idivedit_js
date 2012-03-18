@@ -1,0 +1,21 @@
+extends layout
+
+block contents
+    h2 Add a review for a dive site
+    form
+        label(for="reviewer_name") Your name:
+        input(type="text", name="reviewer_name")
+        br
+        label(for="divesitename")Dive Site:
+        input(type="text",name="divesitename")
+        br
+        label(for="title") Review Title:
+        input(type="text",name="title")
+        br
+        label(for="content")Write your review
+        br
+        textarea(name="content")
+        input(type="submit",value="Add!",class="addreview")
+
+block footer
+    script(src="/js/init_add.js")
