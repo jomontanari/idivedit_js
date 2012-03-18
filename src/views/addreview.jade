@@ -1,20 +1,30 @@
 extends layout
 
 block contents
-    h2 Add a review for a dive site
-    form
+    h1 Add a review for a dive site
+    form(class="addreview")
         label(for="reviewer_name") Your name:
+        br
         input(type="text", name="reviewer_name")
         br
-        label(for="divesitename")Dive Site:
+        label(for="divesitename") Dive Site:
+        br
         input(type="text",name="divesitename")
         br
+        label(for="resortid") Resort:
+        br
+        select#resortid(name="resortid")
+            option(selected) Please choose a resort
+            each resort in resorts
+                option(value="#{resort.id}") #{resort.name}
+        br
         label(for="title") Review Title:
+        br
         input(type="text",name="title")
         br
         label(for="content")Write your review
         br
-        textarea(name="content")
+        textarea(name="content", rows="10")
         input(type="submit",value="Add!",class="addreview")
 
 block footer

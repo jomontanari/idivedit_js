@@ -40,12 +40,15 @@ IDivedIt.ResortListView = Backbone.View.extend({
         this.model.fetch({success: this.render});
     },
 
+    hideResorts: function() {
+        this.$el.empty();
+    },
+
     render: function() {
         var el = this.$el;
 
         this.model.each(function(resortModel) {
             var view = new IDivedIt.ResortView({model: resortModel});
-            console.log(view.render().el);
             $(el).append(view.render().el);
         });
     }

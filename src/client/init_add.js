@@ -1,3 +1,3 @@
 (function($){
-    var addReviewView = new IDivedIt.AddReviewView({el: $("form")});
+    var addReviewView = new IDivedIt.AddReviewView({el: $("form.addreview")});
 })(jQuery);

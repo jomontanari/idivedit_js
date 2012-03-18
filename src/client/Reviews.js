@@ -30,11 +30,25 @@ IDivedIt.AddReviewView = Backbone.View.extend({
 
     initialize: function() {
         this.model = new IDivedIt.ReviewModel();
+        this.model.on("change", this.saving, this);
+        this.model.on("sync", this.saveComplete, this);
         _.bindAll("add");
     },
 
     events: {
         "click .addreview" : "add"
+    },
+
+    savingTemplate: IDivedIt.Templates.Saving,
+
+    savedTemplate: IDivedIt.Templates.Saved,
+
+    saving: function() {
+        this.$el.html(this.savingTemplate());
+    },
+
+    saveComplete: function(e) {
+        this.$el.html(this.savedTemplate());
     },
 
     // todo: refactor this and pull out common methods
@@ -51,7 +65,11 @@ IDivedIt.AddReviewView = Backbone.View.extend({
             var propertyValue = $(inputObj).val();
             model.set(propertyName, propertyValue)
         });
-
+        _.each($(this.el).find("select"), function(inputObj) {
+            var propertyName = $(inputObj).attr("name");
+            var propertyValue = $(inputObj).val();
+            model.set(propertyName, propertyValue)
+        });
     },
 
     add: function(e) {
@@ -59,7 +77,7 @@ IDivedIt.AddReviewView = Backbone.View.extend({
         this.loadModelData(this.model);
         this.model.save();
     }
-})
+});
 
 IDivedIt.ReviewListView = Backbone.View.extend({
 

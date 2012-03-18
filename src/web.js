@@ -22,26 +22,40 @@ var errorFn = function(response) {
     };
 };
 
-// TODO: render on server to avoid multiple requests
+// TODO: DRY up creation of queries (combine with moving to somewhere else)
 app.get("/", function(request, response) {
     var params = {};
 
     var reviewQuery = sequelize.query(models.Review, {limit: 5, order: "createdAt DESC"}, function(reviews) {
         params.reviews = reviews;
-    }, errorFn());
+    }, errorFn);
 
     var countryQuery = sequelize.query(models.Country, null, function(countries) {
-        console.log(countries);
+        params.countries_json = JSON.stringify(jsonObjectBuilder.buildJsonObject(countries));
         params.countries = countries;
-    }, errorFn());
+    }, errorFn);
 
     sequelize.multipleQueries(sequelize.getChainer(), [reviewQuery, countryQuery], function() {
         response.render("index", params);
-    }, errorFn());
+    }, errorFn);
 });
 
 app.use("/review/add", function(request, response) {
-    response.render("addreview");
+
+    var params = {};
+
+    var countryQuery = sequelize.query(models.Country, null, function(countries) {
+        params.countries_json = JSON.stringify(jsonObjectBuilder.buildJsonObject(countries));
+        params.countries = countries;
+    }, errorFn);
+
+    var resortsQuery = sequelize.query(models.Resort, null, function(resorts) {
+        params.resorts = resorts;
+    }, errorFn);
+
+    sequelize.multipleQueries(sequelize.getChainer(), [countryQuery, resortsQuery], function() {
+        response.render("addreview", params);
+    }, errorFn);
 });
 
 // TODO: remove the need for this
@@ -69,7 +83,12 @@ app.get('/resort/:id', function(request, response) {
         params.resort = resorts[0];
     }, errorFn());
 
-    sequelize.multipleQueries(sequelize.getChainer(), [reviewQuery, resortQuery], function() {
+    var countryQuery = sequelize.query(models.Country, null, function(countries) {
+        params.countries_json = JSON.stringify(jsonObjectBuilder.buildJsonObject(countries));
+        params.countries = countries;
+    }, errorFn());
+
+    sequelize.multipleQueries(sequelize.getChainer(), [reviewQuery, resortQuery, countryQuery], function() {
         response.render("reviews", params);
     }, errorFn());
 });
@@ -77,13 +96,21 @@ app.get('/resort/:id', function(request, response) {
 
 // TODO Should do something more than just send blank response
 app.post("/review", function(request, response) {
-    var successResponse = function() { response.send("") };
-    var errorResponse = function() { response.send("") };
+    var successResponse = function() {
+        console.log("success")
+        response.send("")
+    };
+    var errorResponse = function() {
+        console.log("fail")
+        response.send("")
+    };
+
+    console.log(request.body);
     sequelize.addReview(request.body, errorResponse, successResponse);
 });
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
-  console.log("Listening on " + port);
+    console.log("Listening on " + port);
 });
 

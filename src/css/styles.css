@@ -131,7 +131,13 @@ input {
     margin:  5px;
 }
 
-input.button, a.add {
+textarea {
+    font-size: 1.2em;
+    width: 580px;
+    margin:  5px;
+}
+
+input.button, input.addreview, a.add {
     background:  #c3c3c3;
     border:  2px solid #999999;
     color:  black;
@@ -140,9 +146,19 @@ input.button, a.add {
     margin:  5px;
 }
 
+input.addreview {
+    padding:  1px;
+    width: 200px;
+}
+
 input.button {
     width: 50px;
     padding:  1px;
+}
+
+select {
+    font-size: 1.1em;
+    margin: 6px 0;
 }
 
 a.add {
@@ -156,5 +172,19 @@ h3.countries {
     border-top:  1px dotted #999999;
     padding:  10px 0;
     font-weight: bold;
+    font-size: 0.8em;
+}
+
+a.country {
+    display:block;
+    padding:3px;
+}
+
+ul.resorts {
+    width: 200px;
+}
+ul.resorts a {
+    display:block;
+    padding:  2px 25px;
     font-size: 0.8em;
 }

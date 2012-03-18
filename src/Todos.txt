@@ -1,20 +1,9 @@
-TODO: Styling - home page
+TODO: Search for dive site name
 
-TODO: Styling - add review
+TODO: Auto complete for search
 
-TODO: Styling - list of reviews
+TODO: Search Across resorts and countries
 
-TODO: Bind country list on server side
-
-TODO: Bind reviews on home page on server side
-
-TODO: Attach written review to a resort
-
-TODO: Search with autocomplete
-* For dive site name
-* Across resorts and countries
-
-*******************************
 TODO: JS Lint & correct errors
 
 TODO: Autosuggest for dive site name
@@ -33,12 +22,6 @@ TODO: Error handling
 TODO: Resort name on dive site list page
 
 TODO: Validation for saving a review
-
-TODO: Indication that review has been added
-* Loading icon
-* Thank you when it's successful
-* Redirect / link to home page
-* Clear form
 
 TODO: If user doesn't know the resort, attach a review to a country
 

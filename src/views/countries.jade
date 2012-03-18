@@ -1,6 +1,11 @@
+script
+    var IDivedIt = IDivedIt || {};
+    IDivedIt.CountriesJSON = !{countries_json}
+
 h3(class="countries") Find Reviews By Country
 
 ul(id="countries")
     each country in countries
-        a(href="#",class="country) #{country.name}
-            ul(id="resortsfor#{country.id}")
+        li(id="country#{country.id}")
+            a.country(href="#") #{country.name}
+            ul.resorts(id="resortsfor#{country.id}")

@@ -14,7 +14,8 @@ IDivedIt.CountryListModel = Backbone.Collection.extend({
 IDivedIt.CountryView = Backbone.View.extend({
 
     initialize: function() {
-        _.bindAll(this, "showResorts", "resortListId");
+        _.bindAll(this, "showResorts", "resortListId", "toggleResorts");
+        this.resortsVisible = false;
     },
 
     tagName: "li",
@@ -22,15 +23,25 @@ IDivedIt.CountryView = Backbone.View.extend({
     template: IDivedIt.Templates.Country,
 
     events: {
-        "click .country" : "showResorts"
+        "click .country" : "toggleResorts"
     },
 
     resortListId: function () {
         return "#resortsfor" + this.model.get("id");
     },
 
-    showResorts: function(e) {
+    toggleResorts: function(e) {
         e.preventDefault();
+        (this.resortsVisible) ? this.hideResorts() : this.showResorts();
+    },
+
+    hideResorts: function() {
+        this.resortsVisible = false;
+        this.resortsView.hideResorts();
+    },
+
+    showResorts: function() {
+        this.resortsVisible = true;
         this.resortsView = new IDivedIt.ResortListView({ el: $(this.resortListId()), countryid: this.model.get("id")});
     },
 
@@ -43,17 +54,17 @@ IDivedIt.CountryView = Backbone.View.extend({
 IDivedIt.CountryListView = Backbone.View.extend({
 
     initialize: function(){
-      _.bindAll(this, 'render');
+        _.bindAll(this, 'render');
         this.model = new IDivedIt.CountryListModel({view: this});
-        this.model.fetch({success: this.render, error: function() {console.log("error")}});
+        this.model.on("reset", this.render);
+        this.model.reset(IDivedIt.CountriesJSON);
     },
 
     render: function() {
-        var $el = this.$el;
-
+        var el = this.el;
         this.model.each(function(country) {
-            var view = new IDivedIt.CountryView({model: country});
-            $el.append(view.render().el);
+            var elementId = "#country" + country.id;
+            new IDivedIt.CountryView({model: country, el: $(el).find(elementId)});
         });
 
     }
